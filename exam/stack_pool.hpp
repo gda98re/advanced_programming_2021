@@ -6,20 +6,23 @@
   Iterator of the class stack_pool
 */
 
-template <typename stackpool, typename T, typename N = std::size_t> 
+template <typename T, typename N = std::size_t>
+template <typename O> 
  class _iterator{
+    using stackpool = typename stack_pool<T,N> 
     stackpool* pool;
     N index;
     public:
     using stack_type = N;
-    using value_type = T;
+    using value_type = O;
     using reference = value_type&;
     using pointer = value_type*;
     using difference_type = std::ptrdiff_t;
     using iterator_category = std::forward_iterator_tag;
 
     _iterator(stackpool* const p , const stack_type& x): pool{p}, index{x} {}
-    const reference operator*() const { return pool->value(index); }
+    const reference operator*() const { return pool->value(index); } //serve implementare anche la versione non const?
+    pointer operator->() const { return &**this; } //serve implementare la versione non const?
     _iterator operator++() {
     index = pool->next(index);
     return *this;
@@ -61,7 +64,7 @@ class stack_pool{
   node_t& node(const stack_type x) noexcept { return pool[x-1]; } //perchè noexcept? la x data può essere sbagliata
   const node_t& node(const stack_type x) const noexcept { return pool[x-1]; }
 
-  void init_free_nodes(const stack_type& first, const stack_type& last) {
+  void init_free_nodes(const stack_type& first, const size_type& last) { //meglio mettere gli input come stack_type o size_type?
     pool.reserve(last);
     for(auto i = first; i < last; ++i )
       pool.emplace_back(i + 1);
@@ -98,9 +101,9 @@ class stack_pool{
 
   explicit stack_pool(const size_type n) {  reserve(n); } // reserve n nodes in the pool (custom ctor)
 
-  stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
+  const stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
 
-  void reserve(const size_type n) { init_free_nodes(capacity()+stack_type(1), n); }// reserve n nodes in the pool
+  void reserve(const size_type n) { init_free_nodes(capacity()+size_type(1), n); }// reserve n nodes in the pool
 
   const size_type capacity() const { return pool.capacity(); } // the capacity of the pool
 
