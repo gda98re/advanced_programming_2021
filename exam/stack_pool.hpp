@@ -97,7 +97,7 @@ class stack_pool{
   ~stack_pool() = default;
 
   explicit stack_pool(const size_type n) { // reserve n nodes in the pool (custom ctor)
-    init_free_nodes(stack_type(1),n);
+    reserve(n);
   }
 
   stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
