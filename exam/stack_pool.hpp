@@ -98,7 +98,7 @@ class stack_pool{
 
   explicit stack_pool(const size_type n) {  reserve(n); } // reserve n nodes in the pool (custom ctor)
 
-  stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
+  const stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
 
   void reserve(const size_type n) { init_free_nodes(capacity()+stack_type(1), n); }// reserve n nodes in the pool
 
