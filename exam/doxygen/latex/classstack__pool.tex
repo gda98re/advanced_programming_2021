@@ -1,0 +1,123 @@
+\hypertarget{classstack__pool}{}\doxysection{stack\+\_\+pool$<$ T, N $>$ Class Template Reference}
+\label{classstack__pool}\index{stack\_pool$<$ T, N $>$@{stack\_pool$<$ T, N $>$}}
+
+
+\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} class  
+
+
+
+
+{\ttfamily \#include $<$stack\+\_\+pool.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classstack__pool_a3bc4a36accdcf0fbe805f30e8324ce49}\label{classstack__pool_a3bc4a36accdcf0fbe805f30e8324ce49}} 
+using {\bfseries iterator} = \mbox{\hyperlink{class__iterator}{\+\_\+iterator}}$<$ \mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}}$<$ value\+\_\+type, stack\+\_\+type $>$, value\+\_\+type $>$
+\item 
+\mbox{\Hypertarget{classstack__pool_a8a222651b5f84b41239e34a8f4e7bec0}\label{classstack__pool_a8a222651b5f84b41239e34a8f4e7bec0}} 
+using {\bfseries const\+\_\+iterator} = \mbox{\hyperlink{class__iterator}{\+\_\+iterator}}$<$ const \mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}}$<$ value\+\_\+type, stack\+\_\+type $>$, const value\+\_\+type $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classstack__pool_a0d10f595220bd0eb26a73580ba1aec3a}\label{classstack__pool_a0d10f595220bd0eb26a73580ba1aec3a}} 
+{\bfseries stack\+\_\+pool} (const \mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \&)=default
+\item 
+\mbox{\Hypertarget{classstack__pool_a2273b94302569c08104ce7e329e1adc2}\label{classstack__pool_a2273b94302569c08104ce7e329e1adc2}} 
+\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \& {\bfseries operator=} (const \mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \&)=default
+\item 
+\mbox{\Hypertarget{classstack__pool_a16b6e91d65e1e34189d511f1801b1e7d}\label{classstack__pool_a16b6e91d65e1e34189d511f1801b1e7d}} 
+{\bfseries stack\+\_\+pool} (\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \&\&)=default
+\item 
+\mbox{\Hypertarget{classstack__pool_a0af3a3a6e159d88629d1a859a426f010}\label{classstack__pool_a0af3a3a6e159d88629d1a859a426f010}} 
+\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \& {\bfseries operator=} (\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \&\&)=default
+\item 
+\mbox{\Hypertarget{classstack__pool_aafefb59940dd739cacc48c515b0b0eda}\label{classstack__pool_aafefb59940dd739cacc48c515b0b0eda}} 
+{\bfseries stack\+\_\+pool} (const size\+\_\+type n)
+\item 
+\mbox{\Hypertarget{classstack__pool_a7d9489195827f42620a2670bd2b340ef}\label{classstack__pool_a7d9489195827f42620a2670bd2b340ef}} 
+const stack\+\_\+type {\bfseries new\+\_\+stack} () const
+\item 
+\mbox{\Hypertarget{classstack__pool_a1e86c6c999300446bf30d9ea244d69cf}\label{classstack__pool_a1e86c6c999300446bf30d9ea244d69cf}} 
+void {\bfseries reserve} (const size\+\_\+type n)
+\item 
+\mbox{\Hypertarget{classstack__pool_af9c2f46f93bfc08fce87dcb5f427894f}\label{classstack__pool_af9c2f46f93bfc08fce87dcb5f427894f}} 
+const size\+\_\+type {\bfseries capacity} () const
+\item 
+\mbox{\Hypertarget{classstack__pool_a6357d20cf5d33d1ea7e13a9a4b49e13f}\label{classstack__pool_a6357d20cf5d33d1ea7e13a9a4b49e13f}} 
+bool {\bfseries empty} (const stack\+\_\+type x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_acbee0cc3bb981d73d8580f5f4512b497}\label{classstack__pool_acbee0cc3bb981d73d8580f5f4512b497}} 
+const stack\+\_\+type {\bfseries end} () const noexcept
+\item 
+\mbox{\Hypertarget{classstack__pool_ac971d117f1a5b24aedbbe31dbeb0b8fd}\label{classstack__pool_ac971d117f1a5b24aedbbe31dbeb0b8fd}} 
+value\+\_\+type \& {\bfseries value} (const stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a5ff34b9a86c177e847fc51e653225375}\label{classstack__pool_a5ff34b9a86c177e847fc51e653225375}} 
+const value\+\_\+type \& {\bfseries value} (const stack\+\_\+type x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_a83ebaafa32d523ae5e828d7f62cb584d}\label{classstack__pool_a83ebaafa32d523ae5e828d7f62cb584d}} 
+stack\+\_\+type \& {\bfseries next} (const stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a8960564037196468411d279ca60285bc}\label{classstack__pool_a8960564037196468411d279ca60285bc}} 
+const stack\+\_\+type \& {\bfseries next} (const stack\+\_\+type x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_ad2b6f55bf07361cdf6a73ca6d2de00e0}\label{classstack__pool_ad2b6f55bf07361cdf6a73ca6d2de00e0}} 
+const stack\+\_\+type {\bfseries stack\+\_\+length} (const value\+\_\+type \&x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_a97de09b4f4c833344d594f8d84c041bd}\label{classstack__pool_a97de09b4f4c833344d594f8d84c041bd}} 
+const stack\+\_\+type {\bfseries n\+\_\+free\+\_\+nodes} () const
+\item 
+\mbox{\Hypertarget{classstack__pool_aee2100f70932969b484fae199b9ec9ca}\label{classstack__pool_aee2100f70932969b484fae199b9ec9ca}} 
+stack\+\_\+type {\bfseries push} (const value\+\_\+type \&val, const stack\+\_\+type head)
+\item 
+\mbox{\Hypertarget{classstack__pool_a86014fe3966024f20113b89a492b8c2c}\label{classstack__pool_a86014fe3966024f20113b89a492b8c2c}} 
+stack\+\_\+type {\bfseries push} (value\+\_\+type \&\&val, const stack\+\_\+type head)
+\item 
+\mbox{\Hypertarget{classstack__pool_a386ad2faf5c31ce450cac368bd13fa4c}\label{classstack__pool_a386ad2faf5c31ce450cac368bd13fa4c}} 
+stack\+\_\+type {\bfseries pop} (const stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a090ab2cc80e9c1e82c655b64da7d4c79}\label{classstack__pool_a090ab2cc80e9c1e82c655b64da7d4c79}} 
+stack\+\_\+type {\bfseries free\+\_\+stack} (stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a63c18a64f57e01e60f169c07f8394fd7}\label{classstack__pool_a63c18a64f57e01e60f169c07f8394fd7}} 
+void {\bfseries print\+\_\+stack} (const stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a8a4b96472be48bc3e8f07e1776efd357}\label{classstack__pool_a8a4b96472be48bc3e8f07e1776efd357}} 
+auto {\bfseries begin} (const stack\+\_\+type x)
+\item 
+\mbox{\Hypertarget{classstack__pool_a2b1a334d85d13e147cb242929ae5b81f}\label{classstack__pool_a2b1a334d85d13e147cb242929ae5b81f}} 
+auto {\bfseries end} (const stack\+\_\+type)
+\item 
+\mbox{\Hypertarget{classstack__pool_a590cefebb9e29257abdd561786ef9a5f}\label{classstack__pool_a590cefebb9e29257abdd561786ef9a5f}} 
+auto {\bfseries begin} (const stack\+\_\+type x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_aae0aa20844a951f20307c9345fe3d37b}\label{classstack__pool_aae0aa20844a951f20307c9345fe3d37b}} 
+auto {\bfseries end} (const stack\+\_\+type) const
+\item 
+\mbox{\Hypertarget{classstack__pool_ae8df4c53dc99a59b80788107754f04fa}\label{classstack__pool_ae8df4c53dc99a59b80788107754f04fa}} 
+auto {\bfseries cbegin} (const stack\+\_\+type x) const
+\item 
+\mbox{\Hypertarget{classstack__pool_ac1589aa8bc7717244517c5db0785c5d3}\label{classstack__pool_ac1589aa8bc7717244517c5db0785c5d3}} 
+auto {\bfseries cend} (const stack\+\_\+type) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classstack__pool_a06c10e01cf547749928dc2cdae946316}\label{classstack__pool_a06c10e01cf547749928dc2cdae946316}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} \&x)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T, typename N = std\+::size\+\_\+t$>$\newline
+class stack\+\_\+pool$<$ T, N $>$}
+
+\mbox{\hyperlink{classstack__pool}{stack\+\_\+pool}} class 
+
+the class implements a pool of multiple stacks 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+stack\+\_\+pool.\+hpp\end{DoxyCompactItemize}
