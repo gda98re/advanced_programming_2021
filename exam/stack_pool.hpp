@@ -123,9 +123,9 @@ class stack_pool{
 
   const stack_type n_free_nodes() const { return stack_length(free_nodes); }
 
-  stack_type push(const value_type& val, const stack_type& head) { return (_push(val,head)); } //l_value push
+  stack_type push(const value_type& val, const stack_type& head) { return _push(val,head); } //l_value push
 
-  stack_type push(value_type&& val, const stack_type& head) { return (_push(std::move(val),head)); }//r-value push
+  stack_type push(value_type&& val, const stack_type& head) { return _push(std::move(val),head); }//r-value push
 
   stack_type pop(const stack_type& x) {
     if(empty(x)) { std::cerr << "stack underflow" << std::endl; return end(); } //da implementare con errori
