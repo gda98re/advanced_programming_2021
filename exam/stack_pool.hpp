@@ -49,7 +49,7 @@ class stack_pool{
   struct node_t{
     T value;
     N next;
-    explicit node_t(const N x): value{}, next{x} {}; //ci va explicit o può andare la conversione implicita?
+    explicit node_t(const N x): value{}, next{x} {} //ci va explicit o può andare la conversione implicita?
   };
 
   std::vector<node_t> pool;
@@ -96,15 +96,11 @@ class stack_pool{
   stack_pool& operator=(stack_pool&&) = default; 
   ~stack_pool() = default;
 
-  explicit stack_pool(const size_type n) { // reserve n nodes in the pool (custom ctor)
-    reserve(n);
-  }
+  explicit stack_pool(const size_type n) {  reserve(n); } // reserve n nodes in the pool (custom ctor)
 
   stack_type new_stack() const { return end(); } // return an empty stack //ci va const oppure no?
 
-  void reserve(const size_type n) { // reserve n nodes in the pool
-    init_free_nodes(capacity() + stack_type(1) , n);
-  }
+  void reserve(const size_type n) { init_free_nodes(capacity()+stack_type(1), n); }// reserve n nodes in the pool
 
   const size_type capacity() const { return pool.capacity(); } // the capacity of the pool
 
@@ -127,12 +123,9 @@ class stack_pool{
 
   const stack_type n_free_nodes() const { return stack_length(free_nodes); }
 
-  stack_type push(const value_type& val, const stack_type& head) { //l_value push
-      return (_push(val,head));
-  }
-  stack_type push(value_type&& val, const stack_type& head) { //r-value push
-      return (_push(std::move(val),head));
-  }
+  stack_type push(const value_type& val, const stack_type& head) { return (_push(val,head)); } //l_value push
+
+  stack_type push(value_type&& val, const stack_type& head) { return (_push(std::move(val),head)); }//r-value push
 
   stack_type pop(const stack_type& x) {
     if(empty(x)) { std::cerr << "stack underflow" << std::endl; return end(); } //da implementare con errori
