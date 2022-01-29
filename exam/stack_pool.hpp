@@ -1,46 +1,6 @@
 #include <vector>
 #include <iostream>
 
-//! An iterator class
-/*!
-  Iterator of the class stack_pool
-*/
-
-template <typename T, typename N = std::size_t>
-template <typename O> 
- class _iterator{
-    using stackpool = typename stack_pool<T,N> 
-    stackpool* pool;
-    N index;
-    public:
-    using stack_type = N;
-    using value_type = O;
-    using reference = value_type&;
-    using pointer = value_type*;
-    using difference_type = std::ptrdiff_t;
-    using iterator_category = std::forward_iterator_tag;
-
-    _iterator(stackpool* const p , const stack_type& x): pool{p}, index{x} {}
-    const reference operator*() const { return pool->value(index); } //serve implementare anche la versione non const?
-    pointer operator->() const { return &**this; } //serve implementare la versione non const?
-    _iterator operator++() {
-    index = pool->next(index);
-    return *this;
-    }
-    _iterator operator++(int) {
-      auto tmp = *this;
-      ++(*this);
-      return tmp;
-    }
-    friend bool operator==(const _iterator& x, const _iterator& y) {
-      return x.index == y.index;
-    }
-    friend bool operator!=(const _iterator& x, const _iterator& y) {
-      return !(x == y);
-    }
-  };
-
-
 //! stack_pool class
 /*!
   the class implements a pool of multiple stacks
@@ -161,8 +121,11 @@ class stack_pool{
     std::cout << "end" << std::endl;
   }
 
-  using iterator = _iterator<stack_pool<value_type,stack_type>,value_type>; //aggiornato i ...
-  using const_iterator = _iterator<const stack_pool<value_type,stack_type>, const value_type>; // aggiornato i ...
+  template <typename O>
+  class _iterator; 
+
+  using iterator = _iterator<value_type>; //aggiornato i ...
+  using const_iterator = _iterator<const value_type>; // aggiornato i ...
 
   auto begin(const stack_type& x) { return iterator(this,x); }
   auto end(const stack_type& ) { return iterator(this,end()); } // this is not a typo
@@ -173,3 +136,44 @@ class stack_pool{
   auto cbegin(const stack_type& x) const { return const_iterator(this,x); }
   auto cend(const stack_type& ) const { return const_iterator(this,end()); }
 };
+
+
+//! An iterator class
+/*!
+  Iterator of the class stack_pool
+*/
+
+
+  template <typename T, typename N>
+  template <typename O> 
+  class stack_pool<T,N>::_iterator{
+    using stackpool = stack_pool<T,N>; 
+    stackpool* pool;
+    N index;
+    public:
+    using stack_type = N;
+    using value_type = O;
+    using reference = value_type&;
+    using pointer = value_type*;
+    using difference_type = std::ptrdiff_t;
+    using iterator_category = std::forward_iterator_tag;
+
+    _iterator(stackpool* const p , const stack_type& x): pool{p}, index{x} {}
+    const reference operator*() const { return pool->value(index); } //serve implementare anche la versione non const?
+    pointer operator->() const { return &**this; } //serve implementare la versione non const?
+    _iterator operator++() {
+    index = pool->next(index);
+    return *this;
+    }
+    _iterator operator++(int) {
+      auto tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+    friend bool operator==(const _iterator& x, const _iterator& y) {
+      return x.index == y.index;
+    }
+    friend bool operator!=(const _iterator& x, const _iterator& y) {
+      return !(x == y);
+    }
+  };
