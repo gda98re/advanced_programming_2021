@@ -71,11 +71,18 @@ class stack_pool{
 
   void print_stack(const stack_type& x);
 
-  template <typename O>
+  friend std::ostream& operator<<(std::ostream& os, const stack_pool& x) { //definire sto operatore fuori comd friend è un casino, friend serve per accedere a size_type
+    for(auto i = size_type(1); i <= x.capacity(); ++i)
+      os << x.value(i) << " " ;
+    os << std::endl;
+    return os;
+}
+
+  template <typename O, typename stackpool>
   class _iterator;
 
-  using iterator = _iterator<value_type>; //aggiornato i ...
-  using const_iterator = _iterator<const value_type>; // aggiornato i ...
+  using iterator = _iterator<value_type, stack_pool<T,N>>; //aggiornato i ...
+  using const_iterator = _iterator<const value_type, const stack_pool<T,N>>; // aggiornato i ...
 
   iterator begin(const stack_type& x) { return iterator(this,x); }
   iterator end(const stack_type& ) { return iterator(this,end()); } // this is not a typo
@@ -120,7 +127,7 @@ N stack_pool<T,N>::_push(X&& val, const stack_type head) {
 template <typename T, typename N>
 const N stack_pool<T,N>::stack_length(const value_type& x) const {
   auto tmp = stack_type(0);
-  for( auto i = cbegin(x); i != cend(x); ++i)
+  for( auto i = begin(x); i != end(x); ++i)
     ++tmp;
   return tmp;
 }
@@ -146,29 +153,19 @@ N stack_pool<T,N>::free_stack(stack_type& x) {
 template <typename T, typename N>
 void stack_pool<T,N>::print_stack(const stack_type& x) {
   if(x == end()) {std::cout << "stack vuota" << std::endl; return; }
-  for(auto i = cbegin(x); i != cend(x); ++i)
+  for(auto i = begin(x); i != end(x); ++i)
     std::cout << *i << "-->" ;
   std::cout << "end" << std::endl;
 }
 
-template <typename T, typename N>
-std::ostream& operator<<(std::ostream& os, const stack_pool<T,N>& x) {
-  using node_t = typename stack_pool<T,N>::node_t;
-  using size_type = typename std::vector<node_t>::size_type; 
-  for( auto i = size_type(1); i <= x.capacity(); ++i)
-    os << x.value(i) << " " ;
-  os << std::endl;
-  return os;
-}
 
 //! An iterator class
 /*!
   Iterator of the class stack_pool
 */
 template <typename T, typename N>
-template <typename O> 
+template <typename O,typename stackpool>
 class stack_pool<T,N>::_iterator{
-  using stackpool = stack_pool<T,N>; 
   stackpool* pool;
   N index;
   public:
