@@ -138,9 +138,9 @@ N stack_pool<T,N>::pop(const stack_type& x) {
 
 template <typename T, typename N>
 N stack_pool<T,N>::free_stack(stack_type& x) {
-    while(!empty(x))
+  while(!empty(x))
     x = pop(x);
-    return x;
+  return x;
 } // free entire stack
 
 template <typename T, typename N>
