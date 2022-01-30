@@ -76,7 +76,7 @@ class stack_pool{
       os << x.value(i) << " " ;
     os << std::endl;
     return os;
-}
+  }
 
   template <typename O, typename stackpool>
   class _iterator;
@@ -164,7 +164,7 @@ void stack_pool<T,N>::print_stack(const stack_type& x) {
   Iterator of the class stack_pool
 */
 template <typename T, typename N>
-template <typename O,typename stackpool>
+template <typename O,typename stackpool> //è necessario anche il template stackpool, perchè per i const_itertors il puntatore this è const, (il metodo è marcato const) per cui il primo membro deve essere un const stack_pool*
 class stack_pool<T,N>::_iterator{
   stackpool* pool;
   N index;
