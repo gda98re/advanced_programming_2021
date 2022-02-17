@@ -36,8 +36,8 @@ class stack_pool{
   stack_pool() noexcept = default;
   stack_pool(const stack_pool&) = default;
   stack_pool& operator=(const stack_pool&) = default;
-  stack_pool(stack_pool&&) = default;
-  stack_pool& operator=(stack_pool&&) = default; 
+  stack_pool(stack_pool&&) noexcept = default;
+  stack_pool& operator=(stack_pool&&) noexcept = default; 
   ~stack_pool() = default;
   explicit stack_pool(const size_type n) {  reserve(n); } // reserve n nodes in the pool (custom ctor)
 
