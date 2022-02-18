@@ -1,8 +1,8 @@
+#pragma once
 #include <vector>
-#include <iostream>
 
 
-template <typename stackpool, typename O, typename N>
+template <typename stackpool, typename T, typename N>
 class _iterator;
 
 
@@ -12,7 +12,7 @@ class stack_pool{
   struct node_t{
     T value;
     N next;
-    explicit node_t(const N x): value{}, next{x} {} //ci va explicit o può andare la conversione implicita?
+    explicit node_t(const N x): value{}, next{x} {} //custom ctor usato in init_free_nodes in emplace_back()
   };
 
   std::vector<node_t> pool;
@@ -24,7 +24,7 @@ class stack_pool{
   node_t& node(const stack_type x) noexcept { return pool[x-1]; }
   const node_t& node(const stack_type x) const noexcept { return pool[x-1]; }
 
-  void init_free_nodes(const size_type& first, const size_type& last);
+  void init_free_nodes(const size_type first, const size_type last);
 
   void check_capacity();
 
@@ -33,61 +33,54 @@ class stack_pool{
 
   public:
 
-  stack_pool() noexcept = default;
-  stack_pool(const stack_pool&) = default;
-  stack_pool& operator=(const stack_pool&) = default;
-  stack_pool(stack_pool&&) noexcept = default;
-  stack_pool& operator=(stack_pool&&) noexcept = default; 
-  ~stack_pool() noexcept = default;
-  explicit stack_pool(const size_type n) {  reserve(n); } // reserve n nodes in the pool (custom ctor)
+  stack_pool() noexcept = default; //default ctor
+  stack_pool(const stack_pool&) = default; //copy ctor
+  stack_pool& operator=(const stack_pool&) = default; //copy assignment
+  stack_pool(stack_pool&&) noexcept = default; //move ctor
+  stack_pool& operator=(stack_pool&&) noexcept = default; //move assignment
+  ~stack_pool() noexcept = default; //dtor
+  explicit stack_pool(const size_type n) { reserve(n); } //custom ctor, reserve n nodes in the pool
 
-  const stack_type new_stack() const noexcept { return end(); } // return an empty stack //ci va const oppure no?
+  stack_type new_stack() const noexcept { return end(); } // return an empty stack
 
-  void reserve(const size_type n) { init_free_nodes(capacity()+size_type(1), n); }// reserve n nodes in the pool
+  void reserve(const size_type n) { init_free_nodes(capacity()+1, n); }// reserve n nodes in the pool
 
-  const size_type capacity() const noexcept { return pool.capacity(); } // the capacity of the pool
+  size_type capacity() const noexcept { return pool.capacity(); } // the capacity of the pool
 
-  bool empty(const stack_type& x) const noexcept { return x == end(); }; //può essere implementato con degli iterators tipo begin()==end()
+  bool empty(const stack_type x) const noexcept { return x == end(); };
 
-  const stack_type end() const { return stack_type(0); }  //stack_type(0) è il costruttore del tipo stack_type (chiedere a Gallo)
+  stack_type end() const noexcept { return stack_type(0); }
 
-  value_type& value(const stack_type& x) noexcept  { return node(x).value; }
-  const value_type& value(const stack_type& x) const noexcept  { return node(x).value; }
+  value_type& value(const stack_type x) noexcept  { return node(x).value; }
+  const value_type& value(const stack_type x) const noexcept  { return node(x).value; }
 
-  stack_type& next(const stack_type& x) noexcept  { return node(x).next; }
-  const stack_type& next(const stack_type& x) const noexcept  { return node(x).next; }
+  stack_type& next(const stack_type x) noexcept  { return node(x).next; }
+  const stack_type& next(const stack_type x) const noexcept  { return node(x).next; }
 
-  stack_type push(const value_type& val, const stack_type& head) { return _push(val,head); } //l_value push
+  stack_type push(const value_type& val, const stack_type head) { return _push(val,head); } //l_value push
 
-  stack_type push(value_type&& val, const stack_type& head) { return _push(std::move(val),head); }//r-value push
+  stack_type push(value_type&& val, const stack_type head) { return _push(std::move(val),head); }//r-value push
 
-  stack_type pop(const stack_type& x);
+  stack_type pop(const stack_type x);
 
-  stack_type free_stack(stack_type& x);
+  stack_type free_stack(stack_type x);
 
-  friend std::ostream& operator<<(std::ostream& os, const stack_pool& x) { //friend serve per accedere a size_type
-    for(auto i = size_type(1); i <= x.capacity(); ++i)
-      os << x.value(i) << " " ;
-    os << std::endl;
-    return os;
-  }
+  using iterator = _iterator<stack_pool, value_type, stack_type>;
+  using const_iterator = _iterator<stack_pool, const value_type, stack_type>;
 
-  using iterator = _iterator<stack_pool<value_type,stack_type>, value_type, stack_type>;
-  using const_iterator = _iterator<const stack_pool<value_type,stack_type>, const value_type, const stack_type>;
+  iterator begin(const stack_type x) { return iterator(this,x); }
+  iterator end(const stack_type ) noexcept { return iterator(this,end()); } // this is not a typo
 
-  iterator begin(const stack_type& x) { return iterator(this,x); }
-  iterator end(const stack_type& ) { return iterator(this,end()); } // this is not a typo
+  const_iterator begin(const stack_type x) const { return const_iterator(this,x); }
+  const_iterator end(const stack_type ) const noexcept { return const_iterator(this,end()); }
 
-  const_iterator begin(const stack_type& x) const { return const_iterator(this,x); }
-  const_iterator end(const stack_type& ) const { return const_iterator(this,end()); }
-
-  const_iterator cbegin(const stack_type& x) const { return const_iterator(this,x); }
-  const_iterator cend(const stack_type& ) const { return const_iterator(this,end()); }
+  const_iterator cbegin(const stack_type x) const { return const_iterator(this,x); }
+  const_iterator cend(const stack_type ) const noexcept { return const_iterator(this,end()); }
 };
 
 
 template <typename T, typename N>
-void stack_pool<T,N>::init_free_nodes(const size_type& first, const size_type& last) { //meglio mettere gli input come stack_type o size_type?
+void stack_pool<T,N>::init_free_nodes(const size_type first, const size_type last) {
   pool.reserve(last);
   for(auto i = first; i < last; ++i )
     pool.emplace_back(i + 1); //costruisco i free nodes nuovi utilizzando il custom ctor di node
@@ -116,39 +109,36 @@ N stack_pool<T,N>::_push(X&& val, const stack_type head) {
 }
 
 template <typename T, typename N>
-N stack_pool<T,N>::pop(const stack_type& x) {
-  if(empty(x)) { std::cerr << "stack underflow" << std::endl; return end(); }
-  else {
+N stack_pool<T,N>::pop(const stack_type x) {
     auto tmp = next(x); //tmp è la testa della stack
     next(x) = free_nodes; //la nuova testa dei free nodes (x) punta alla vecchia testa dei free nodes (free_nodes)
     free_nodes = x; // la testa dei free nodes viene aggiornata
     return tmp; // ritorna la nuova testa della stack
-  }
 } // delete first node
 
 template <typename T, typename N>
-N stack_pool<T,N>::free_stack(stack_type& x) {
+N stack_pool<T,N>::free_stack(stack_type x) {
   while(!empty(x))
     x = pop(x);
   return x;
 } // free entire stack
 
 
-template <typename stackpool, typename O, typename N> //è necessario anche il template stackpool, perchè per i const_itertors il puntatore this è const, (il metodo è marcato const) per cui il primo membro deve essere un const stack_pool*
+template <typename stackpool, typename T, typename N>
 class _iterator{
   stackpool* pool;
   N index;
   public:
   using stack_type = N;
-  using value_type = O;
+  using value_type = T;
   using reference = value_type&;
   using pointer = value_type*;
   using difference_type = std::ptrdiff_t;
   using iterator_category = std::forward_iterator_tag;
 
-  _iterator(stackpool* const p , const stack_type& x): pool{p}, index{x} {}
-  const reference operator*() const noexcept { return pool->value(index); } //serve implementare anche la versione non const?
-  pointer operator->() const noexcept { return &**this; } //serve implementare la versione non const?
+  _iterator(stackpool* p , stack_type x): pool{p}, index{x} {}
+  reference operator*() const noexcept { return pool->value(index); }
+  pointer operator->() const noexcept { return &**this; }
   _iterator operator++() {
     index = pool->next(index);
     return *this;
