@@ -1,10 +1,9 @@
 #include <vector>
 #include <iostream>
 
-//! stack_pool class
-/*!
-  the class implements a pool of multiple stacks
-*/
+
+template <typename stackpool, typename O, typename N>
+class _iterator;
 
 template <typename T, typename N = std::size_t>
 class stack_pool{
@@ -78,11 +77,11 @@ class stack_pool{
     return os;
   }
 
-  template <typename O, typename stackpool>
-  class _iterator;
+  //template <typename O, typename stackpool> serve per scrivere l'iterator dentro la classe
+ // class _iterator;
 
-  using iterator = _iterator<value_type, stack_pool<T,N>>; //aggiornato i ...
-  using const_iterator = _iterator<const value_type, const stack_pool<T,N>>; // aggiornato i ...
+  using iterator = _iterator<stack_pool<T,N>, value_type, stack_type>; //aggiornato i ...
+  using const_iterator = _iterator<const stack_pool<T,N>, const value_type, const stack_type>; // aggiornato i ...
 
   iterator begin(const stack_type& x) { return iterator(this,x); }
   iterator end(const stack_type& ) { return iterator(this,end()); } // this is not a typo
@@ -163,9 +162,9 @@ void stack_pool<T,N>::print_stack(const stack_type& x) {
 /*!
   Iterator of the class stack_pool
 */
-template <typename T, typename N>
-template <typename O,typename stackpool> //è necessario anche il template stackpool, perchè per i const_itertors il puntatore this è const, (il metodo è marcato const) per cui il primo membro deve essere un const stack_pool*
-class stack_pool<T,N>::_iterator{
+//template <typename T, typename N> //serve se voglio scrivere l'iterator dentro la classe
+template <typename stackpool, typename O, typename N> //è necessario anche il template stackpool, perchè per i const_itertors il puntatore this è const, (il metodo è marcato const) per cui il primo membro deve essere un const stack_pool*
+class _iterator{
   stackpool* pool;
   N index;
   public:
